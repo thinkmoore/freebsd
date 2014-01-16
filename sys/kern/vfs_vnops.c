@@ -249,6 +249,10 @@ restart:
 				NDFREE(ndp, NDF_ONLY_PNBUF);
 				return (error);
 			}
+#ifdef MAC
+		        mac_vnode_post_create(cred, ndp->ni_dvp, ndp->ni_vp,
+					      &ndp->ni_cnd, vap);
+#endif
 			fmode &= ~O_TRUNC;
 			vp = ndp->ni_vp;
 		} else {
